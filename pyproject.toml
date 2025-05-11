@@ -1,36 +1,44 @@
-[tool.poetry]
+[project]
 name = "tomlkit"
 version = "0.13.2"
 description = "Style preserving TOML library"
 authors = [
-    "Sébastien Eustace <sebastien@eustace.io>",
-    "Frost Ming <me@frostming.com>"
+    { name = "Sébastien Eustace", email = "sebastien@eustace.io" },
+    { name = "Frost Ming", email = "me@frostming.com" },
 ]
+requires-python = ">=3.8"
+readme = "README.md"
 license = "MIT"
 
-readme = "README.md"
+[project.urls]
+Homepage = "https://github.com/sdispater/tomlkit"
+Repository = "https://github.com/sdispater/tomlkit"
 
-homepage = "https://github.com/sdispater/tomlkit"
-repository = "https://github.com/sdispater/tomlkit"
-
-include = [
-  { path = "tomlkit/py.typed" },
-  { path = "tests", format = "sdist" },
-  { path = "docs", format = "sdist" },
-  { path = "CHANGELOG.md", format = "sdist" },
+[dependency-groups]
+dev = [
+    "pytest>=7.2.0,<8",
+    "pytest-cov>=4.0.0,<5",
+    "PyYAML~=6.0",
+    "pre-commit>=2.20.0,<3",
+    "mypy>=0.990,<0.991",
+    "Sphinx>=4.3.2,<5",
+    "furo>=2022.9.29,<2023",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.8"
+[tool.hatch.build.targets.sdist]
+include = [
+    "tomlkit/py.typed",
+    "tests",
+    "docs",
+    "CHANGELOG.md",
+]
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.2.0"
-pytest-cov = "^4.0.0"
-PyYAML = "^6.0"
-pre-commit = "^2.20.0"
-mypy = "^0.990"
-Sphinx = "^4.3.2"
-furo = "^2022.9.29"
+[tool.hatch.build.targets.wheel]
+include = ["tomlkit/py.typed"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff.lint]
 extend-select = [
@@ -53,7 +61,3 @@ known-third-party = ["pytest"]
 force-single-line = true
 lines-after-imports = 2
 lines-between-types = 1
-
-[build-system]
-requires = ["poetry-core>=1.0.0a9"]
-build-backend = "poetry.core.masonry.api"
